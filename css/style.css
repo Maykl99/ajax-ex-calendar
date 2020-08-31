@@ -4,10 +4,52 @@
     box-sizing: border-box;
 }
 
+body{
+    font-family: sans-serif;
+}
+
+.container{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 30px;
+}
+
+.container_list{
+    width: 50%;
+    margin: auto;
+}
+
+.container_list ul{
+    margin-top: 30px;
+    display: flex;
+    flex-flow: wrap;
+}
+
+.container_list ul li{
+    list-style-type: none;
+    padding: 5px;
+}
+
 .holiday{
     color: tomato;
 }
 
 button{
     padding: 10px;
+}
+
+
+#messaggio_di_errore{
+    display: none;
+    height: 100px;
+    width: 150px;
+    background-color: #fafafa;
+    border: 1px solid #e6e5e5;
+    margin-top: 30px;
+    text-align: center;
+    padding-top: 20px;
+}
+
+button,#messaggio_di_errore{
+    cursor: pointer;
 }

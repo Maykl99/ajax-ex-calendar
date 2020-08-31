@@ -16,7 +16,11 @@
         <button id="next">next</button>
     </div>
 
-    <ul class="month-list"></ul> <!-- Lista dei giorni del mese -->
+    <div class="container_list">
+        <ul class="month-list"></ul> <!-- Lista dei giorni del mese -->
+        <div id="messaggio_di_errore">Errore, impossibile aprire il mese seguente</div>
+    </div>
+    
 
     <script id="day-template" type="text/x-handlebars-template">
         <li data-complete-date="{{completeDate}}">{{day}} {{month}}</li>

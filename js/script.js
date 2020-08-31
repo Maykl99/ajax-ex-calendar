@@ -27,7 +27,10 @@ $(document).ready(function(){
     $('button#next').on('click',function(){
         var mese=01;
         if(oggData.month() == 11){
-            alert('Impossibile continuare')
+            //alert('Impossibile continuare')
+            $('#messaggio_di_errore').show(400);
+            messaggioDiErrore();
+
         }else{
             mese++;
             oggData.add(1,'months');
@@ -40,7 +43,9 @@ $(document).ready(function(){
     // al click su prev partirà una funzione di callback che andrà a verifica la condizione passata
     $('button#prev').on('click',function(){
         if(oggData.month() == 0){
-            alert('Impossibile continuare')
+            //alert('Impossibile continuare')
+            $('#messaggio_di_errore').show(400);
+            messaggioDiErrore();
         }else{
             oggData.subtract(1, 'months');
             $('.month-list').children().remove();
@@ -51,6 +56,13 @@ $(document).ready(function(){
 });
 
 // lista funzioni 
+
+// chiude finestra di errore
+function messaggioDiErrore(){
+    $('#messaggio_di_errore').click(function(){
+        $(this).hide(300);
+    });
+};
 
 // aggiunge 0
 function addZero(n){
