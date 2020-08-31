@@ -21,15 +21,19 @@ $(document).ready(function(){
     // creiamo un oggetto moment su questa data
     var oggData=moment("2018-01-01");
     $('h1.month').text(oggData.format('MMMM-YYYY'));
+    var anno=oggData.format('YYYY')
     var mese=oggData.format('MMMM')
+
+
     var giorniDelMese=oggData.daysInMonth() 
-    for(var i=0; i<=giorniDelMese; i++){
+    for(var i=1; i<=giorniDelMese; i++){
         console.log(i)
         var source = $("#day-template").html();
         var template = Handlebars.compile(source);
         var context = { 
-            day: i, 
-            month: mese
+            day: addZero(i), 
+            month: mese,
+            completeDate: anno + mese + addZero(i)
         };
         var html = template(context);
 
@@ -37,4 +41,12 @@ $(document).ready(function(){
     }
 
 });
+
+function addZero(n){
+    if(n<10){
+        return '0' + n;
+    }
+
+    return n;
+}
 
