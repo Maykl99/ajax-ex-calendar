@@ -1,6 +1,6 @@
 // i giorni li vado a creare attraverso il mio oggetto moment()
 // le festività le creo attraverso le API che mi offre boolean
-// quando clicco sul pulsante next devo aggire sull'oggetto moment
+// quando clicco sul pulsante next e prev devo aggire sull'oggetto moment 
 // se il mese va oltre l'undicesimo partirà un messaggio di errore e se scende sotto lo zero
 //https://flynn.boolean.careers/exercises/api/holidays?year=2018&month=0
 /* {
@@ -17,20 +17,42 @@
     ]
 } */
 $(document).ready(function(){
-    // data di partenza
-    // creiamo un oggetto moment su questa data
-    numero= 01;
-    var t=moment(`2018-01-01`);
-    $('button#next').on('click',function(){
-        '0' + numero++;
-        t = moment(`2018-${numero}-01`)
-    });   
-    //incrementaValore(numero);
-    var oggData=t;
+    // dichiaro l'oggetto moment e passo un valore specifico
+    var mese= 01;
+    var oggData=moment(`2018-${mese}-01`);
+    // richiamo le due funzione create
     insertDays(oggData);
     insertHolidays(oggData);
+    // al click su next partirà una funzione di callback che andrà a verifica la condizione passata
+    $('button#next').on('click',function(){
+        var mese=01;
+        if(oggData.month() == 11){
+            alert('Impossibile continuare')
+        }else{
+            mese++;
+            oggData.add(1,'months');
+            $('.month-list').children().remove();
+            $('h1').attr('data-this-date', `2018-${addZero(mese)}-01`)
+            insertDays(oggData);
+            insertHolidays(oggData);
+        }
+    });   
+    // al click su prev partirà una funzione di callback che andrà a verifica la condizione passata
+    $('button#prev').on('click',function(){
+        if(oggData.month() == 0){
+            alert('Impossibile continuare')
+        }else{
+            oggData.subtract(1, 'months');
+            $('.month-list').children().remove();
+            insertDays(oggData);
+            insertHolidays(oggData);
+        }
+    });  
 });
 
+// lista funzioni 
+
+// aggiunge 0
 function addZero(n){
     if(n<10){
         return '0' + n;
@@ -39,19 +61,20 @@ function addZero(n){
     return n;
 }
 
+// creo la struttura della pagina passando valori dinamicamente
 function insertDays(data){
     $('h1.month').text(data.format('MMMM-YYYY'));
     var anno=data.format('YYYY')
     var mese=data.format('MMMM')
 
 
-    var giorniDelMese=data.daysInMonth() 
+    var giorniDelMese=data.daysInMonth() // mi ritorna i giorni contenuti in un mese
     for(var i=1; i<=giorniDelMese; i++){
-        //console.log(i)
+        // ciclo e stampo i valori nell'html attraverso Handlebars
         var source = $("#day-template").html();
         var template = Handlebars.compile(source);
         var context = { 
-            day: addZero(i), 
+            day: addZero(i), // mi ritorna tutti i giorni del mese
             month: mese,
             completeDate: anno + '-' + data.format('MM') + '-' + addZero(i)
         };
@@ -61,6 +84,7 @@ function insertDays(data){
     }
 }
 
+// richiamo l'API di boolean
 function insertHolidays(data){
     $.ajax({
         type: "GET",
@@ -82,8 +106,3 @@ function insertHolidays(data){
     });
 }
 
-function incrementaValore(n){
-    return '0' + n++;
-}
-
-// al click 01 diventa 02 aggiungiamo 1 al mese 
